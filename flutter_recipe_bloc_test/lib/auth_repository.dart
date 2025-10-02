@@ -15,7 +15,6 @@ class AuthRepository {
             if (data != null &&
                 data['email'] == 'eve.holt@reqres.in' &&
                 data['password'] == 'cityslicka') {
-              // ส่ง response mock
               return handler.resolve(
                 Response(
                   requestOptions: options,
@@ -48,7 +47,7 @@ class AuthRepository {
       final response = await _dio.post('/mock-login', data: auth.toJson());
 
       _token = response.data['token'] as String?;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
     }
   }

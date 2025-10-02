@@ -25,7 +25,7 @@ class AuthRepository {
               );
             } else {
               return handler.reject(
-                DioError(
+                DioException(
                   requestOptions: options,
                   response: Response(
                     requestOptions: options,

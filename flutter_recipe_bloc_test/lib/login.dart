@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_cubit.dart';
 import 'auth_model.dart';
+import 'main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,7 +25,10 @@ class _LoginFormState extends State<LoginPage> {
           listener: (context, state) {
             if (state is Authenticated) {
               // login สำเร็จ → pop กลับหน้า main
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => RecipeFinderPage()),
+              );
             } else if (state is Unauthenticated) {
               setState(() {
                 message = state.message ?? "Login failed";

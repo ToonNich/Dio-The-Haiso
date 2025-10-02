@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather_bloc/register.dart';
 import 'auth_cubit.dart';
 import 'auth_repository.dart';
 import 'recipe_cubit.dart';
@@ -56,7 +57,7 @@ class RecipeFinderPage extends StatelessWidget {
                 if (!authCubit.isLoggedIn) {
                   await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const LoginPage()),
+                    MaterialPageRoute(builder: (_) => const RegisterPage()),
                   );
                 }
                 if (authCubit.isLoggedIn) {

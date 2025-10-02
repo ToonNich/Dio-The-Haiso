@@ -34,6 +34,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+   Future<void> register(AuthModel auth) async {
+    try {
+      await authRepository.register(auth);
+      if (authRepository.isLoggedIn) {
+        emit(Authenticated(authRepository.token!));
+      } else {
+        emit(Unauthenticated("Register failed"));
+      }
+    } catch (e) {
+      emit(Unauthenticated(e.toString()));
+    }
+  }
+
   void logout() {
     authRepository.logout();
     emit(Unauthenticated());

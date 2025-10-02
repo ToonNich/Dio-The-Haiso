@@ -23,7 +23,6 @@ class _LoginFormState extends State<LoginPage> {
         child: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              // login สำเร็จ → pop กลับหน้า main
               Navigator.pop(context);
             } else if (state is Unauthenticated) {
               setState(() {

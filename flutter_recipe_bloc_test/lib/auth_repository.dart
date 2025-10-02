@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'auth_model.dart';
+import 'dart:developer';
 
 class AuthRepository {
   final Dio _dio = Dio();
@@ -23,6 +24,7 @@ class AuthRepository {
                 ),
               );
             } else {
+              // จำลอง response ล้มเหลว
               return handler.reject(
                 DioException(
                   requestOptions: options,
@@ -35,8 +37,17 @@ class AuthRepository {
               );
             }
           }
-
           return handler.next(options);
+        },
+
+        onResponse: (response, handler) {
+          log('Dio Response: ${response.statusCode} | ${response.data}', name: 'Dio');
+          return handler.next(response);
+        },
+
+        onError: (DioException err, handler) {
+          log('Dio Error: ${err.response?.statusCode} | ${err.message}', name: 'Dio');
+          return handler.next(err);
         },
       ),
     );
@@ -45,7 +56,6 @@ class AuthRepository {
   Future<void> login(AuthModel auth) async {
     try {
       final response = await _dio.post('/mock-login', data: auth.toJson());
-
       _token = response.data['token'] as String?;
     } on DioException catch (e) {
       throw Exception(e.response?.data['error'] ?? e.message);
